@@ -30,8 +30,8 @@ class SubdomainScanning:
             },
             {
                 "banner": "chaos",
-                "cmd": "rsync -avz -e \"ssh -o 'StrictHostKeyChecking no' -i '/tmp/516.pem'\" port@last-one.duckdns.org:\"/home/port/sent/$TARGET.txt\" '$WORKSPACE/subdomain/chaos-$TARGET.txt'",
-                "output_path": "$WORKSPACE/subdomain/$TARGET-chaos.txt"
+                "cmd": "ssh 'port@last-one.duckdns.org' -o 'StrictHostKeyChecking no' -o ServerAliveInterval=60 -i '/tmp/516.pem' -f \"find /root/chaos/ -type f -name '$TARGET*'\" | xargs -I % rsync --protect-args -avz -e 'ssh -i /tmp/516.pem' 'port@last-one.duckdns.org:%' '$WORKSPACE/subdomain/chaos-$TARGET.txt'",
+                "output_path": ""
             },
             {
                 "banner": "subx",
