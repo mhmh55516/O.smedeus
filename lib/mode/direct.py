@@ -58,3 +58,4 @@ def handle(options):
     
     if utils.loop_grep(modules, 'dir'):
         dirbscan.DirbScan(options)
+    os._exit(os.EX_OK)
