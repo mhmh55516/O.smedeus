@@ -33,7 +33,6 @@ def handle(options):
     if utils.loop_grep(modules, 'sub'):
         subdomain.SubdomainScanning(options)
         probing.Probing(options)
-        fingerprint.Fingerprint(options)
 
     if utils.loop_grep(modules, 'screen'):
         screenshot.ScreenShot(options)
