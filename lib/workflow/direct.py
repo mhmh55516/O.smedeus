@@ -26,23 +26,34 @@ class SubdomainScanning:
                 "banner": "Subfinder",
                 "cmd": "$GO_PATH/subfinder -d $TARGET -t 100 -o $WORKSPACE/subdomain/$OUTPUT-subfinder.txt -nW",
                 "output_path": "$WORKSPACE/subdomain/$OUTPUT-subfinder.txt",
-                "std_path": "$WORKSPACE/subdomain/std-$OUTPUT-subfinder.std"
+                "std_path": "$WORKSPACE/subdomain/std-$TARGET-subfinder.std"
+            },
+            {
+                "banner": "chaos",
+                "cmd": "rsync -avz -e \"ssh -o 'StrictHostKeyChecking no' -i '/tmp/516.pem'\" port@last-one.duckdns.org:\"/home/port/sent/$TARGET.txt\" '$WORKSPACE/subdomain/chaos-$TARGET.txt'",
+                "output_path": "$WORKSPACE/subdomain/$TARGET-chaos.txt"
+            },
+            {
+                "banner": "subx",
+                "cmd": "python3 /root/get_subx.py -d $TARGET -o $WORKSPACE/subdomain/$OUTPUT-subx.txt",
+                "output_path": "$WORKSPACE/subdomain/$OUTPUT-subx.txt",
+                "std_path": "$WORKSPACE/subdomain/std-$TARGET-subx.std"
             },
             {
                 "banner": "assetfinder",
                 "cmd": "$GO_PATH/assetfinder -subs-only $TARGET | tee $WORKSPACE/subdomain/$OUTPUT-assetfinder.txt",
                 "output_path": "$WORKSPACE/subdomain/$OUTPUT-assetfinder.txt",
-                "std_path": "$WORKSPACE/subdomain/std-$OUTPUT-assetfinder.std"
+                "std_path": "$WORKSPACE/subdomain/std-$TARGET-assetfinder.std"
             },
             {
                 "banner": "findomain",
                 "cmd": "$PLUGINS_PATH/findomain -u $WORKSPACE/subdomain/$OUTPUT-findomain.txt -t $TARGET ",
                 "output_path": "$WORKSPACE/subdomain/$TARGET-findomain.txt",
-                "std_path": "$WORKSPACE/subdomain/std-$OUTPUT-findomain.std",
+                "std_path": "$WORKSPACE/subdomain/std-$TARGET-findomain.std",
             },
             {
                 "banner": "gobuster",
-                "cmd": "$GO_PATH/gobuster dns --wildcard -q -t 100 -w $DATA_PATH/wordlists/dns/shorts.txt -d $TARGET -o $WORKSPACE/subdomain/raw-$OUTPUT-gobuster.txt",
+                "cmd": "$GO_PATH/gobuster -m dns --wildcard -q -t 5000 -w /root/all.txt -u $TARGET -o $WORKSPACE/subdomain/raw-$OUTPUT-gobuster.txt",
                 "output_path": "$WORKSPACE/subdomain/raw-$OUTPUT-gobuster.txt",
                 "std_path": "$WORKSPACE/subdomain/std-raw-$OUTPUT-gobuster.std",
                 "post_run": "clean_gobuster",
