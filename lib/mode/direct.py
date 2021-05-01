@@ -18,6 +18,7 @@ from modules import portscan
 from modules import vulnscan
 from modules import dirbscan
 from modules import gitscan
+from modules import corscan
 
 
 def handle(options):
@@ -39,6 +40,12 @@ def handle(options):
 
     if utils.loop_grep(modules, 'fin'):
         fingerprint.Fingerprint(options)
+        
+    if utils.loop_grep(modules, 'sto'):
+        stoscan.StoScan(options)
+
+    if utils.loop_grep(modules, 'cors'):
+        corscan.CORScan(options)
 
     if utils.loop_grep(modules, 'link'):
         linkfinding.LinkFinding(options)
