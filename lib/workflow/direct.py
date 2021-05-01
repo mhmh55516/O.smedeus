@@ -53,7 +53,7 @@ class SubdomainScanning:
             },
             {
                 "banner": "gobuster",
-                "cmd": "$GO_PATH/gobuster -m dns -q -t 5000 -w /root/all.txt -u $TARGET -o $WORKSPACE/subdomain/raw-$OUTPUT-gobuster.txt",
+                "cmd": "$GO_PATH/gobuster -m dns -t 5000 -w /root/all.txt -u $TARGET -o $WORKSPACE/subdomain/raw-$OUTPUT-gobuster.txt",
                 "output_path": "$WORKSPACE/subdomain/raw-$OUTPUT-gobuster.txt",
                 "std_path": "$WORKSPACE/subdomain/std-raw-$OUTPUT-gobuster.std",
                 "post_run": "clean_gobuster",
