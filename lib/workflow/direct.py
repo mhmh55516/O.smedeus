@@ -51,19 +51,11 @@ class SubdomainScanning:
                 "output_path": "$WORKSPACE/subdomain/$TARGET-findomain.txt",
                 "std_path": "$WORKSPACE/subdomain/std-$TARGET-findomain.std",
             },
-            {
-                "banner": "gobuster",
-                "cmd": "screen -S 'xscan' -dm bash -c '$GO_PATH/gobuster -m dns -t 5000 -w /root/all.txt -u $TARGET -o $WORKSPACE/subdomain/raw-$OUTPUT-gobuster.txt'",
-                "output_path": "$WORKSPACE/subdomain/raw-$OUTPUT-gobuster.txt",
-                "std_path": "$WORKSPACE/subdomain/std-raw-$OUTPUT-gobuster.std",
-                "post_run": "clean_gobuster",
-                "cleaned_output": "$WORKSPACE/subdomain/$OUTPUT-gobuster.txt",
-            },
         ],
         'slow': [
             {
                 "banner": "massdns",
-                "cmd": "$PLUGINS_PATH/massdns/scripts/subbrute.py $DATA_PATH/wordlists/dns/all.txt $TARGET | $PLUGINS_PATH/massdns/bin/massdns -r $PLUGINS_PATH/massdns/lists/resolvers.txt -q -t A -o S -w $WORKSPACE/subdomain/raw-massdns.txt",
+                "cmd": "$PLUGINS_PATH/massdns/scripts/subbrute.py /root/all.txt $TARGET | $PLUGINS_PATH/massdns/bin/massdns -r /root/resolvers.txt -q -t A -o S -w $WORKSPACE/subdomain/raw-massdns.txt",
                 "output_path": "$WORKSPACE/subdomain/raw-massdns.txt",
                 "std_path": "$WORKSPACE/subdomain/std-raw-massdns.txt",
                 "post_run": "clean_massdns",
