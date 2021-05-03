@@ -162,6 +162,13 @@ class Probing:
                 "waiting": "last",
                 "post_run": "get_domain",
             },
+            {
+                "banner": "naabu",
+                "requirement": "$WORKSPACE/probing/resolved-$OUTPUT.txt",
+                "cmd": "/root/naabu -iL $WORKSPACE/probing/resolved-$OUTPUT.txt -exclude-cdn -top-ports 200 -silent -o $WORKSPACE/probing/naabu-$OUTPUT.txt",
+                "output_path": "$WORKSPACE/probing/naabu-$OUTPUT.txt",
+                "std_path": "$WORKSPACE/probing/std-naabu-$OUTPUT.std"
+            }
         ],
     }
 
