@@ -271,13 +271,13 @@ class ScreenShot:
             },
             {
                 "banner": "gowitness",
-                "cmd": f"/root/gowitness file -s $WORKSPACE/probing/http-$OUTPUT.txt -t {threads}  --log-level fatal --destination  $WORKSPACE/screenshot/raw-gowitness/ --db $WORKSPACE/screenshot/gowitness.db",
+                "cmd": f"/root/gowitness file -f $WORKSPACE/probing/http-$OUTPUT.txt -t {threads} --screenshot-path  $WORKSPACE/screenshot/raw-gowitness/ --db-path $WORKSPACE/screenshot/gowitness.db",
                 "output_path": "$WORKSPACE/screenshot/gowitness.db",
                 "std_path": "",
             },
             {
                 "banner": "gowitness gen report",
-                "cmd": "/root/gowitness report generate -c 99999 -n $WORKSPACE/screenshot/$OUTPUT-raw-gowitness.html --destination $WORKSPACE/screenshot/raw-gowitness/ --db $WORKSPACE/screenshot/gowitness.db",
+                "cmd": "/root/gowitness report generate -n $WORKSPACE/screenshot/$OUTPUT-raw-gowitness.html --screenshot-path $WORKSPACE/screenshot/raw-gowitness/ --db-path $WORKSPACE/screenshot/gowitness.db",
                 "output_path": "$WORKSPACE/screenshot/$OUTPUT-raw-gowitness-0.html",
                 "std_path": "$WORKSPACE/screenshot/std-$OUTPUT-aquatone.std",
                 "waiting": "last",
