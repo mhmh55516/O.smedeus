@@ -17,7 +17,7 @@ def routine(args):
     plugin = args.plugin
     summary = args.summary
 
-    cmd = f'python3 {plugin}/LinkFinder/linkfinder.py -i {target} -d -o cli | tee {output}/{strip_target}.txt'
+    cmd = f'python3 /root/LinkFinder/linkfinder.py -i {target} -d -o cli | tee {output}/{strip_target}.txt'
     utils.print_info(f"Execute: {cmd}")
     os.system(cmd)
     # append to summary
