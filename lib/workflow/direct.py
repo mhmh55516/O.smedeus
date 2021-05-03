@@ -369,7 +369,7 @@ class LinkFinding:
             {
                 "requirement": "$WORKSPACE/probing/resolved-$OUTPUT.txt",
                 "banner": "waybackurls",
-                "cmd": "cat $WORKSPACE/probing/resolved-$OUTPUT.txt | $/root/go/bin/waybackurls | tee $WORKSPACE/links/raw-wayback-$OUTPUT.txt",
+                "cmd": "cat $WORKSPACE/probing/resolved-$OUTPUT.txt | /root/go/bin/waybackurls | tee $WORKSPACE/links/raw-wayback-$OUTPUT.txt",
                 "output_path": "$WORKSPACE/links/raw-wayback-$OUTPUT.txt",
                 "std_path": "$WORKSPACE/links/std-wayback-$OUTPUT.std",
                 "post_run": "clean_waybackurls",
