@@ -265,19 +265,19 @@ class ScreenShot:
         'general': [
             {
                 "banner": "aquatone",
-                "cmd": f"cat $WORKSPACE/probing/resolved-$OUTPUT.txt | $GO_PATH/aquatone -scan-timeout 1000 -threads {threads} -out $WORKSPACE/screenshot/$OUTPUT-aquatone",
+                "cmd": f"cat $WORKSPACE/probing/resolved-$OUTPUT.txt | /root/aquatone -scan-timeout 1000 -threads {threads} -out $WORKSPACE/screenshot/$OUTPUT-aquatone",
                 "output_path": "$WORKSPACE/screenshot/$OUTPUT-aquatone/aquatone_report.html",
                 "std_path": "$WORKSPACE/screenshot/std-$OUTPUT-aquatone.std"
             },
             {
                 "banner": "gowitness",
-                "cmd": f"$GO_PATH/gowitness file -s $WORKSPACE/probing/http-$OUTPUT.txt -t {threads}  --log-level fatal --destination  $WORKSPACE/screenshot/raw-gowitness/ --db $WORKSPACE/screenshot/gowitness.db",
+                "cmd": f"/root/gowitness file -s $WORKSPACE/probing/http-$OUTPUT.txt -t {threads}  --log-level fatal --destination  $WORKSPACE/screenshot/raw-gowitness/ --db $WORKSPACE/screenshot/gowitness.db",
                 "output_path": "$WORKSPACE/screenshot/gowitness.db",
                 "std_path": "",
             },
             {
                 "banner": "gowitness gen report",
-                "cmd": "$GO_PATH/gowitness report generate -c 99999 -n $WORKSPACE/screenshot/$OUTPUT-raw-gowitness.html --destination $WORKSPACE/screenshot/raw-gowitness/ --db $WORKSPACE/screenshot/gowitness.db",
+                "cmd": "/root/gowitness report generate -c 99999 -n $WORKSPACE/screenshot/$OUTPUT-raw-gowitness.html --destination $WORKSPACE/screenshot/raw-gowitness/ --db $WORKSPACE/screenshot/gowitness.db",
                 "output_path": "$WORKSPACE/screenshot/$OUTPUT-raw-gowitness-0.html",
                 "std_path": "$WORKSPACE/screenshot/std-$OUTPUT-aquatone.std",
                 "waiting": "last",
@@ -335,14 +335,14 @@ class StoScan:
             {
                 "requirement": "$WORKSPACE/stoscan/all-dig-info.txt",
                 "banner": "rgf extract CNAME",
-                "cmd": "$GO_PATH/rgf -file $WORKSPACE/stoscan/all-dig-info.txt cname | tee $WORKSPACE/stoscan/have-cname.txt",
+                "cmd": "/root/go/bin/rgf -file $WORKSPACE/stoscan/all-dig-info.txt cname | tee $WORKSPACE/stoscan/have-cname.txt",
                 "output_path": "$WORKSPACE/stoscan/have-cname.txt",
                 "std_path": "",
             },
             {
                 "requirement": "$WORKSPACE/stoscan/all-dig-info.txt",
                 "banner": "rgf extract Azure",
-                "cmd": "$GO_PATH/rgf -file $WORKSPACE/stoscan/all-dig-info.txt azure | tee $WORKSPACE/stoscan/azure-sto.txt",
+                "cmd": "/root/go/bin/rgf -file $WORKSPACE/stoscan/all-dig-info.txt azure | tee $WORKSPACE/stoscan/azure-sto.txt",
                 "output_path": "$WORKSPACE/stoscan/azure-sto.txt",
                 "std_path": "",
             },
@@ -369,7 +369,7 @@ class LinkFinding:
             {
                 "requirement": "$WORKSPACE/probing/resolved-$OUTPUT.txt",
                 "banner": "waybackurls",
-                "cmd": "cat $WORKSPACE/probing/resolved-$OUTPUT.txt | $GO_PATH/waybackurls | tee $WORKSPACE/links/raw-wayback-$OUTPUT.txt",
+                "cmd": "cat $WORKSPACE/probing/resolved-$OUTPUT.txt | $/root/go/bin/waybackurls | tee $WORKSPACE/links/raw-wayback-$OUTPUT.txt",
                 "output_path": "$WORKSPACE/links/raw-wayback-$OUTPUT.txt",
                 "std_path": "$WORKSPACE/links/std-wayback-$OUTPUT.std",
                 "post_run": "clean_waybackurls",
@@ -391,7 +391,7 @@ class LinkFinding:
             {
                 "requirement": "$WORKSPACE/links/raw-wayback-$OUTPUT.txt",
                 "banner": "Formatting Input",
-                "cmd": "cat $WORKSPACE/links/raw-wayback-$OUTPUT.txt | unfurl -u format %d%p",
+                "cmd": "cat $WORKSPACE/links/raw-wayback-$OUTPUT.txt | /root/go/bin/unfurl -u format %d%p",
                 "output_path": "$WORKSPACE/links/$OUTPUT-paths.txt",
                 "std_path": "",
                 "waiting": "last",
@@ -463,7 +463,7 @@ class PortScan:
             {
                 "requirement": "$WORKSPACE/portscan/http-$OUTPUT.txt",
                 "banner": "aquatone",
-                "cmd": f"cat $WORKSPACE/portscan/http-$OUTPUT.txt | $GO_PATH/aquatone -screenshot-timeout 50000 -threads {threads} -out $WORKSPACE/portscan/$OUTPUT-aquatone",
+                "cmd": f"cat $WORKSPACE/portscan/http-$OUTPUT.txt | /root/aquatone -screenshot-timeout 50000 -threads {threads} -out $WORKSPACE/portscan/$OUTPUT-aquatone",
                 "output_path": "$WORKSPACE/portscan/$OUTPUT-aquatone/aquatone_report.html",
                 "std_path": "$WORKSPACE/portscan/std-$OUTPUT-aquatone.std",
                 "waiting": "last",
