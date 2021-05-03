@@ -156,7 +156,7 @@ class Probing:
             {
                 "banner": "httpx",
                 "requirement": "$WORKSPACE/probing/raw-all-$OUTPUT.txt",
-                "cmd": "/root/go/bin/httpx -l $WORKSPACE/subdomain/final-$OUTPUT.txt -ports 80,81,8080,8081,8005,8009,8443,443,9090,9000,8000,488,8008,8009,5222,8444,8010,8880,8118,8123,5000,4000,3000,5432,8090,8005 -silent -o $WORKSPACE/probing/http-$OUTPUT.txt",
+                "cmd": "screen -S 'x' -dm bash -c '/root/go/bin/httpx -l $WORKSPACE/subdomain/final-$OUTPUT.txt -ports 80,81,8080,8081,8005,8009,8443,443,9090,9000,8000,488,8008,8009,5222,8444,8010,8880,8118,8123,5000,4000,3000,5432,8090,8005 -silent -o $WORKSPACE/probing/http-$OUTPUT.txt;exec bash'",
                 "output_path": "$WORKSPACE/probing/http-$OUTPUT.txt",
                 "std_path": "$WORKSPACE/probing/std-http-$OUTPUT.std",
                 "waiting": "last",
