@@ -391,7 +391,7 @@ class LinkFinding:
             {
                 "requirement": "$WORKSPACE/links/raw-wayback-$OUTPUT.txt",
                 "banner": "Formatting Input",
-                "cmd": "cat $WORKSPACE/links/raw-wayback-$OUTPUT.txt | /root/go/bin/unfurl -u format %d%p",
+                "cmd": "cat $WORKSPACE/links/raw-wayback-$OUTPUT.txt | /root/go/bin/unfurl -u format %d%p >> $WORKSPACE/links/$OUTPUT-paths.txt",
                 "output_path": "$WORKSPACE/links/$OUTPUT-paths.txt",
                 "std_path": "",
                 "waiting": "last",
