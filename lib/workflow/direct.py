@@ -148,19 +148,18 @@ class Probing:
                 "cmd": "cat $WORKSPACE/probing/raw-all-$OUTPUT.txt | $PLUGINS_PATH/massdns/bin/massdns -r $DATA_PATH/resolvers.txt -q -t A -o S -w $WORKSPACE/probing/raw-allmassdns.txt",
                 "output_path": "$WORKSPACE/probing/raw-allmassdns.txt",
                 "std_path": "",
-                "waiting": "last",
+                "waiting": "first",
                 "pre_run": "get_subdomains",
                 "post_run": "clean_massdns",
                 "cleaned_output": "$WORKSPACE/probing/ip-$OUTPUT.txt",
             },
             {
                 "banner": "httpx",
-                "requirement": "$WORKSPACE/probing/raw-all-$OUTPUT.txt",
-                "cmd": "/usr/local/bin/httpx -l $WORKSPACE/subdomain/final-$OUTPUT.txt -ports 80,81,8080,8081,8005,8009,8443,443,9090,9000,8000,488,8008,8009,5222,8444,8010,8880,8118,8123,5000,4000,3000,5432,8090,8005 -silent -o $WORKSPACE/probing/http-$OUTPUT.txt",
+                "requirement": "$WORKSPACE/probing/resolved-$OUTPUT.txt",
+                "cmd": "/usr/local/bin/httpx -l $WORKSPACE/probing/resolved-$OUTPUT.txt -ports 80,81,8080,8081,8005,8009,8443,443,9090,9000,8000,488,8008,8009,5222,8444,8010,8880,8118,8123,5000,4000,3000,5432,8090,8005 -silent -o $WORKSPACE/probing/http-$OUTPUT.txt && sed -i -e 's/:80$//g' $WORKSPACE/probing/http-$OUTPUT.txt && sed -i -e 's/:443$//g' $WORKSPACE/probing/http-$OUTPUT.txt",
                 "output_path": "$WORKSPACE/probing/http-$OUTPUT.txt",
                 "std_path": "$WORKSPACE/probing/std-http-$OUTPUT.std",
-                "waiting": "last",
-                "post_run": "get_domain",
+                #"post_run": "get_domain",
             },
             {
                 "banner": "naabu",
@@ -168,6 +167,7 @@ class Probing:
                 "cmd": "/root/naabu -iL $WORKSPACE/probing/resolved-$OUTPUT.txt -exclude-cdn -top-ports 200 -silent -o $WORKSPACE/probing/naabu-$OUTPUT.txt",
                 "output_path": "$WORKSPACE/probing/naabu-$OUTPUT.txt",
                 "std_path": "$WORKSPACE/probing/std-naabu-$OUTPUT.std"
+                "waiting": "last"
             }
         ],
     }
