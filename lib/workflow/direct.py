@@ -335,11 +335,17 @@ class LinkFinding:
             {
                 "requirement": "$WORKSPACE/probing/resolved-$OUTPUT.txt",
                 "banner": "waybackurls",
-                "cmd": "cat $WORKSPACE/probing/resolved-$OUTPUT.txt | /root/go/bin/waybackurls | egrep -v '(.ico|.woff|.eot|.ttf|.woff2|.fonts|.font|.css|.png|.jpeg|.jpg|.svg|.gif|.wolf)' | httpx -silent | tee $WORKSPACE/links/raw-wayback-$OUTPUT.txt",
+                "cmd": "cat $WORKSPACE/probing/resolved-$OUTPUT.txt | /root/go/bin/waybackurls | egrep -v '(.ico|.woff|.eot|.ttf|.woff2|.fonts|.font|.css|.png|.jpeg|.jpg|.svg|.gif|.wolf)' | tee $WORKSPACE/links/raw-wayback-$OUTPUT.txt ",
                 "output_path": "$WORKSPACE/links/raw-wayback-$OUTPUT.txt",
                 "std_path": "$WORKSPACE/links/std-wayback-$OUTPUT.std",
                 "post_run": "clean_waybackurls",
                 "cleaned_output": "$WORKSPACE/links/waybackurls-$OUTPUT.txt",
+            },
+            {
+                "requirement": "$WORKSPACE/probing/http-$OUTPUT.txt",
+                "banner": "ZAP Crawler",
+                "cmd": "python3 /root/zap.py $OUTPUT",
+                "output_path": "",
             },
             {
                 "requirement": "$WORKSPACE/probing/http-$OUTPUT.txt",
@@ -357,8 +363,8 @@ class LinkFinding:
             {
                 "requirement": "$WORKSPACE/links/raw-wayback-$OUTPUT.txt",
                 "banner": "Formatting Input",
-                "cmd": "cat $WORKSPACE/links/raw-wayback-$OUTPUT.txt | /root/go/bin/unfurl -u format %d%p",
-                "output_path": "$WORKSPACE/links/$OUTPUT-paths.txt",
+                "cmd": "cat $WORKSPACE/links/raw-wayback-$OUTPUT.txt $WORKSPACE/links/zap_result.txt | /root/go/bin/hakcheckurl | grep -v 404 | tee $WORKSPACE/links/status-$OUTPUT.txt | grep -E '^200' | grep -E '\.js' | tee $WORKSPACE/links/js-$OUTPUT.txt",
+                "output_path": "$WORKSPACE/links/status-$OUTPUT.txt",
                 "std_path": "",
                 "waiting": "last",
             },
