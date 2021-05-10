@@ -335,7 +335,7 @@ class LinkFinding:
             {
                 "requirement": "$WORKSPACE/probing/resolved-$OUTPUT.txt",
                 "banner": "waybackurls",
-                "cmd": "cat $WORKSPACE/probing/resolved-$OUTPUT.txt | /root/go/bin/waybackurls | egrep -v '(.ico|.woff|.eot|.ttf|.woff2|.fonts|.font|.css|.png|.jpeg|.jpg|.svg|.gif|.wolf)' |  tee $WORKSPACE/links/raw-wayback-$OUTPUT.txt",
+                "cmd": "cat $WORKSPACE/probing/resolved-$OUTPUT.txt | /root/go/bin/waybackurls | egrep -v '(.ico|.woff|.eot|.ttf|.woff2|.fonts|.font|.css|.png|.jpeg|.jpg|.svg|.gif|.wolf)' | httpx -silent | tee $WORKSPACE/links/raw-wayback-$OUTPUT.txt",
                 "output_path": "$WORKSPACE/links/raw-wayback-$OUTPUT.txt",
                 "std_path": "$WORKSPACE/links/std-wayback-$OUTPUT.std",
                 "post_run": "clean_waybackurls",
