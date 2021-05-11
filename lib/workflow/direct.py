@@ -156,7 +156,7 @@ class Probing:
             {
                 "banner": "httpx",
                 "requirement": "$WORKSPACE/probing/resolved-$OUTPUT.txt",
-                "cmd": "/usr/local/bin/httpx -l $WORKSPACE/probing/resolved-$OUTPUT.txt -ports 80,81,8080,8081,8005,8009,8443,443,9090,9000,8000,488,8008,8009,5222,8444,8010,8880,8118,8123,5000,4000,3000,5432,8090,8005 -silent -o $WORKSPACE/probing/http-$OUTPUT.txt && sed -i -e 's/:80$//g' $WORKSPACE/probing/http-$OUTPUT.txt && sed -i -e 's/:443$//g' $WORKSPACE/probing/http-$OUTPUT.txt && cat $WORKSPACE/probing/http-$OUTPUT.txt | grep 'https' | xargs -I % echo % | sed 's/https/http/' | sed 's/8443/8080/' | sed 's/http:\/\///' | xargs -I {} sed --in-place '/http:\/\/{}/d' $WORKSPACE/probing/http-$OUTPUT.txt && wafw00f -i $WORKSPACE/probing/http-$OUTPUT.txt -o $WORKSPACE/probing/waf-info.txt && grep -v 'None' $WORKSPACE/probing/waf-info.txt || tee $WORKSPACE/probing/waf-info.txt || /root/go/bin/xurls || tee $WORKSPACE/probing/waf-urls.txt",
+                "cmd": "/usr/local/bin/httpx -l $WORKSPACE/probing/resolved-$OUTPUT.txt -ports 80,81,8080,8081,8005,8009,443,9090,9000,8000,488,8008,8009,5222,8444,8010,8880,8118,8123,5000,4000,3000,5432,8090,8005 -silent -o $WORKSPACE/probing/http-$OUTPUT.txt && sed -i -e 's/:80$//g' $WORKSPACE/probing/http-$OUTPUT.txt && sed -i -e 's/:443$//g' $WORKSPACE/probing/http-$OUTPUT.txt && cat $WORKSPACE/probing/http-$OUTPUT.txt | grep 'https' | xargs -I % echo % | sed 's/https/http/' | sed 's/8443/8080/' | sed 's/http:\/\///' | xargs -I {} sed --in-place '/http:\/\/{}/d' $WORKSPACE/probing/http-$OUTPUT.txt && wafw00f -i $WORKSPACE/probing/http-$OUTPUT.txt -o $WORKSPACE/probing/waf-info.txt && grep -v 'None' $WORKSPACE/probing/waf-info.txt | tee $WORKSPACE/probing/waf-info.txt | /root/go/bin/xurls | tee $WORKSPACE/probing/waf-urls.txt",
                 "output_path": "$WORKSPACE/probing/http-$OUTPUT.txt",
                 "std_path": "$WORKSPACE/probing/std-http-$OUTPUT.std",
                 #"post_run": "get_domain",
@@ -344,7 +344,7 @@ class LinkFinding:
             {
                 "requirement": "$WORKSPACE/probing/http-$OUTPUT.txt",
                 "banner": "ZAP Crawler",
-                "cmd": "python3 /root/zap.py $OUTPUT && grep -v '/robots.txt' $WORKSPACE/links/zap_result.txt | tee $WORKSPACE/links/zap_result.txt && grep -v '/sitemap.xml' $WORKSPACE/links/zap_result.txt | tee $WORKSPACE/links/zap_result.txt",
+                "cmd": "python3 /root/zap.py $OUTPUT",
                 "output_path": "",
             },
             {
@@ -363,7 +363,7 @@ class LinkFinding:
             {
                 "requirement": "$WORKSPACE/links/raw-wayback-$OUTPUT.txt",
                 "banner": "Formatting Input",
-                "cmd": "cat $WORKSPACE/links/raw-wayback-$OUTPUT.txt $WORKSPACE/links/zap_result.txt | /root/go/bin/qsreplace -a | /root/go/bin/hakcheckurl | grep -v 404 | tee $WORKSPACE/links/status-$OUTPUT.txt | grep -E '^200' | cut -d ' ' -f 2 | tee $WORKSPACE/links/ok-http.txt | grep -E '\.js' | tee $WORKSPACE/links/js_links.txt",
+                "cmd": "cat $WORKSPACE/links/raw-wayback-$OUTPUT.txt $WORKSPACE/links/zap_result.txt | grep -v '/robots.txt'| grep -v '/sitemap.xml' | /root/go/bin/qsreplace -a | /root/go/bin/hakcheckurl | grep -v 404 | tee $WORKSPACE/links/status-$OUTPUT.txt | grep -E '^200' | cut -d ' ' -f 2 | tee $WORKSPACE/links/ok-http.txt | grep -E '\.js' | tee $WORKSPACE/links/js_links.txt && grep -v '\.js' $WORKSPACE/links/ok-http.txt | tee $WORKSPACE/links/no-js.txt",
                 "output_path": "$WORKSPACE/links/status-$OUTPUT.txt",
                 "std_path": "",
                 "waiting": "last",
