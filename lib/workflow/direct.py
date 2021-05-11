@@ -363,7 +363,7 @@ class LinkFinding:
             {
                 "requirement": "$WORKSPACE/links/raw-wayback-$OUTPUT.txt",
                 "banner": "Formatting Input",
-                "cmd": "cat $WORKSPACE/links/raw-wayback-$OUTPUT.txt $WORKSPACE/links/zap_result.txt | /root/go/bin/qsreplace -a | /root/go/bin/hakcheckurl | grep -v 404 | tee $WORKSPACE/links/status-$OUTPUT.txt | grep -E '^200' | grep -E '\.js' | tee $WORKSPACE/links/js-$OUTPUT.txt",
+                "cmd": "cat $WORKSPACE/links/raw-wayback-$OUTPUT.txt $WORKSPACE/links/zap_result.txt | /root/go/bin/qsreplace -a | /root/go/bin/hakcheckurl | grep -v 404 | tee $WORKSPACE/links/status-$OUTPUT.txt | grep -E '^200' | cut -d ' ' -f 2 | tee $WORKSPACE/links/ok-http.txt | grep -E '\.js' | tee $WORKSPACE/links/js_links.txt",
                 "output_path": "$WORKSPACE/links/status-$OUTPUT.txt",
                 "std_path": "",
                 "waiting": "last",
