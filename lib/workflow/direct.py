@@ -156,7 +156,7 @@ class Probing:
             {
                 "banner": "httpx",
                 "requirement": "$WORKSPACE/probing/resolved-$OUTPUT.txt",
-                "cmd": "/usr/local/bin/httpx -l $WORKSPACE/probing/resolved-$OUTPUT.txt -ports 80,81,8080,8081,8005,8009,443,9090,9000,8000,488,8008,8009,5222,8444,8010,8880,8118,8123,5000,4000,3000,5432,8090,8005 -silent -o $WORKSPACE/probing/http-$OUTPUT.txt && sed -i -e 's/:80$//g' $WORKSPACE/probing/http-$OUTPUT.txt && sed -i -e 's/:443$//g' $WORKSPACE/probing/http-$OUTPUT.txt && cat $WORKSPACE/probing/http-$OUTPUT.txt | grep 'https' | xargs -I % echo % | sed 's/https/http/' | sed 's/8443/8080/' | sed 's/http:\/\///' | xargs -I {} sed --in-place '/http:\/\/{}/d' $WORKSPACE/probing/http-$OUTPUT.txt && wafw00f -i $WORKSPACE/probing/http-$OUTPUT.txt -o $WORKSPACE/probing/waf-info.txt && grep -v 'None' $WORKSPACE/probing/waf-info.txt | tee $WORKSPACE/probing/waf-info.txt | /root/go/bin/xurls | tee $WORKSPACE/probing/waf-urls.txt",
+                "cmd": "/usr/local/bin/httpx -l $WORKSPACE/probing/resolved-$OUTPUT.txt -timeout 2 -ports 80,81,8080,8081,8005,8009,443,9090,9000,8000,488,8008,8009,5222,8444,8010,8880,8118,8123,5000,4000,3000,5432,8090,8005 -silent -o $WORKSPACE/probing/http-$OUTPUT.txt && sed -i -e 's/:80$//g' $WORKSPACE/probing/http-$OUTPUT.txt && sed -i -e 's/:443$//g' $WORKSPACE/probing/http-$OUTPUT.txt && cat $WORKSPACE/probing/http-$OUTPUT.txt | grep 'https' | xargs -I % echo % | sed 's/https/http/' | sed 's/8443/8080/' | sed 's/http:\/\///' | xargs -I {} sed --in-place '/http:\/\/{}/d' $WORKSPACE/probing/http-$OUTPUT.txt && wafw00f -i $WORKSPACE/probing/http-$OUTPUT.txt -o $WORKSPACE/probing/waf-info.txt && grep -v 'None' $WORKSPACE/probing/waf-info.txt | tee $WORKSPACE/probing/waf-info.txt | /root/go/bin/xurls | tee $WORKSPACE/probing/waf-urls.txt",
                 "output_path": "$WORKSPACE/probing/http-$OUTPUT.txt",
                 "std_path": "$WORKSPACE/probing/std-http-$OUTPUT.std",
                 #"post_run": "get_domain",
@@ -164,7 +164,7 @@ class Probing:
             {
                 "banner": "naabu",
                 "requirement": "$WORKSPACE/probing/resolved-$OUTPUT.txt",
-                "cmd": "/root/naabu -iL $WORKSPACE/probing/resolved-$OUTPUT.txt -exclude-cdn -top-ports 200 -silent -o $WORKSPACE/probing/naabu-$OUTPUT.txt && sed -i -e 's/.*:80$//g' $WORKSPACE/probing/naabu-$OUTPUT.txt && sed -i -e 's/.*:443$//g' $WORKSPACE/probing/naabu-$OUTPUT.txt && sed -i '/^[[:space:]]*$/d' $WORKSPACE/probing/naabu-$OUTPUT.txt",
+                "cmd": "/root/naabu -iL $WORKSPACE/probing/resolved-$OUTPUT.txt -retries 1 -rate 1000 -exclude-cdn -top-ports 200 -silent -o $WORKSPACE/probing/naabu-$OUTPUT.txt && sed -i -e 's/.*:80$//g' $WORKSPACE/probing/naabu-$OUTPUT.txt && sed -i -e 's/.*:443$//g' $WORKSPACE/probing/naabu-$OUTPUT.txt && sed -i '/^[[:space:]]*$/d' $WORKSPACE/probing/naabu-$OUTPUT.txt",
                 "output_path": "$WORKSPACE/probing/naabu-$OUTPUT.txt",
                 "std_path": "$WORKSPACE/probing/std-naabu-$OUTPUT.std",
                 "waiting": "last"
