@@ -164,7 +164,7 @@ class Probing:
             {
                 "banner": "naabu",
                 "requirement": "$WORKSPACE/probing/resolved-$OUTPUT.txt",
-                "cmd": "/root/naabu -iL $WORKSPACE/probing/resolved-$OUTPUT.txt -retries 1 -rate 1000 -exclude-cdn -top-ports 200 -silent -o $WORKSPACE/probing/naabu-$OUTPUT.txt && sed -i -e 's/.*:80$//g' $WORKSPACE/probing/naabu-$OUTPUT.txt && sed -i -e 's/.*:443$//g' $WORKSPACE/probing/naabu-$OUTPUT.txt && sed -i '/^[[:space:]]*$/d' $WORKSPACE/probing/naabu-$OUTPUT.txt",
+                "cmd": "cat $WORKSPACE/probing/resolved-$OUTPUT.txt | cf-check | /root/naabu -retries 1 -rate 1000 -exclude-cdn -top-ports 200 -silent -o $WORKSPACE/probing/naabu-$OUTPUT.txt && sed -i -e 's/.*:80$//g' $WORKSPACE/probing/naabu-$OUTPUT.txt && sed -i -e 's/.*:443$//g' $WORKSPACE/probing/naabu-$OUTPUT.txt && sed -i '/^[[:space:]]*$/d' $WORKSPACE/probing/naabu-$OUTPUT.txt",
                 "output_path": "$WORKSPACE/probing/naabu-$OUTPUT.txt",
                 "std_path": "$WORKSPACE/probing/std-naabu-$OUTPUT.std",
                 "waiting": "last"
