@@ -40,6 +40,12 @@ class SubdomainScanning:
                 "std_path": "$WORKSPACE/subdomain/std-$TARGET-subx.std"
             },
             {
+                "banner": "rusolver",
+                "cmd": "cat all.txt | /root/resolver -q -d $OUTPUT -t 5000 --timeout 2 | tee $WORKSPACE/subdomain/$OUTPUT-rusolver.txt",
+                "output_path": "$WORKSPACE/subdomain/$OUTPUT-rusolver.txt",
+                "std_path": "$WORKSPACE/subdomain/std-$TARGET-rusolver.std"
+            },
+            {
                 "banner": "assetfinder",
                 "cmd": "$GO_PATH/assetfinder -subs-only $TARGET | tee $WORKSPACE/subdomain/$OUTPUT-assetfinder.txt",
                 "output_path": "$WORKSPACE/subdomain/$OUTPUT-assetfinder.txt",
