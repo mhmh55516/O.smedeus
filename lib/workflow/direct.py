@@ -356,7 +356,7 @@ class LinkFinding:
             {
                 "requirement": "$WORKSPACE/links/raw-wayback-$OUTPUT.txt",
                 "banner": "Formatting Input",
-                "cmd": "cat $WORKSPACE/links/raw-wayback-$OUTPUT.txt $WORKSPACE/links/zap_result.txt | grep -v '/robots.txt' | grep -v '/sitemap.xml' | /root/go/bin/qsreplace -a | /root/go/bin/hakcheckurl | grep -v 404 | tee $WORKSPACE/links/status-$OUTPUT.txt | grep -E '^200' | cut -d ' ' -f 2 | tee $WORKSPACE/links/ok-http.txt | grep -E '\.js' | tee $WORKSPACE/links/js_links.txt && grep -v '\.js' $WORKSPACE/links/ok-http.txt | tee $WORKSPACE/links/no-js.txt && grep -E '^403' $WORKSPACE/links/status-$OUTPUT.txt | cut -d ' ' -f 2 | tee $WORKSPACE/links/403-http.txt",
+                "cmd": "cat $WORKSPACE/links/raw-wayback-$OUTPUT.txt $WORKSPACE/links/zap_result.txt | grep -v '/robots.txt' | grep -v '/sitemap.xml' | /root/go/bin/qsreplace -a | httpx -status-code -threads 200 -silent | grep -v 404 | tee $WORKSPACE/links/status-$OUTPUT.txt | grep -E '^200' | cut -d ' ' -f 1 | tee $WORKSPACE/links/ok-http.txt | grep -E '\.js' | tee $WORKSPACE/links/js_links.txt && grep -v '\.js' $WORKSPACE/links/ok-http.txt | tee $WORKSPACE/links/no-js.txt && grep -E '^403' $WORKSPACE/links/status-$OUTPUT.txt | cut -d ' ' -f 1 | tee $WORKSPACE/links/403-http.txt",
                 "output_path": "$WORKSPACE/links/status-$OUTPUT.txt",
                 "std_path": "$WORKSPACE/links/status-$OUTPUT.std",
                 "waiting": "last",
