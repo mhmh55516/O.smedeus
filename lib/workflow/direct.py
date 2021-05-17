@@ -41,7 +41,7 @@ class SubdomainScanning:
             },
             {
                 "banner": "rusolver",
-                "cmd": "cat /root/all.txt | /root/resolver -q -d $OUTPUT -t 5000 --timeout 2 | tee $WORKSPACE/subdomain/$OUTPUT-rusolver.txt",
+                "cmd": "cat /root/all.txt | /root/rusolver -q -d $OUTPUT -t 5000 --timeout 2 | tee $WORKSPACE/subdomain/$OUTPUT-rusolver.txt",
                 "output_path": "$WORKSPACE/subdomain/$OUTPUT-rusolver.txt",
                 "std_path": "$WORKSPACE/subdomain/std-$TARGET-rusolver.std"
             },
